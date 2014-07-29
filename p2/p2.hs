@@ -1,7 +1,7 @@
 module Main where
 
-
--- explain me
+-- monomorphic constant
+-- each value is only calculated once
 memoized_fib :: Int -> Integer
 memoized_fib = (map fib [0 ..] !!)
    where fib 0 = 0
@@ -18,7 +18,7 @@ main = do
 
     putStrLn "Answer: "
 
-    -- keep in mind laze evaluation!
+    -- keep in mind lazy evaluation!
     -- create an infinite list [1,2,3 ..] with the index to calc
     -- the fibonacci values
     let indexs = [1,2 ..]
@@ -30,11 +30,14 @@ main = do
     let even_valued_terms = filter (\x -> x `mod` 2 == 0) terms
 
     -- only the subset less than or equal to 4 000 000 matter 
-    let even_valued_terms_less_than_4M = takeWhile (<=4000000) even_valued_terms
+    let even_valued_terms_less_than_equal_4M = takeWhile (<=4000000) even_valued_terms
 
 	-- calculate the sum of the subset defined above
-    let sum_even_valued_terms_less_than_4M = sum even_valued_terms_less_than_4M
+    let sum_even_valued_terms_less_than_equal_4M = sum even_valued_terms_less_than_equal_4M
 
+    -- nothing was evaluated until now!
 	-- eval and print!
-    putStrLn (show sum_even_valued_terms_less_than_4M)
+    putStrLn (show sum_even_valued_terms_less_than_equal_4M)
 
+    --all of the above in one line:
+    putStrLn (show  (sum (takeWhile (<=4000000) (filter (\x -> x `mod` 2 == 0) (map memoized_fib [1,2 ..])))))
