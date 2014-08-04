@@ -22,6 +22,9 @@ factors n
         where factor = head (filter (\x -> n `mod` x == 0) primes)                       
 
 
+
+-- find the least common multiple using prime factorization
+-- http://en.wikipedia.org/wiki/Least_common_multiple#Finding_least_common_multiples_by_prime_factorization
 smallestMult :: [Integer] -> Integer
 smallestMult [] = undefined
 --smallestMult [x] = x
